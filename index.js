@@ -5,11 +5,12 @@ module.exports.clients = clients
 module.exports.Server = p2pSocket
 
 function p2pSocket (socket, next, room) {
+  var connectedClients;
   clients[socket.id] = socket
   if (typeof room === 'object') {
-    var connectedClients = socket.adapter.rooms[room.name].sockets
+    connectedClients = socket.adapter.rooms[room.name].sockets
   } else {
-    var connectedClients = clients
+    connectedClients = clients
   }
   socket.emit('numClients', Object.keys(connectedClients).length - 1)
 
